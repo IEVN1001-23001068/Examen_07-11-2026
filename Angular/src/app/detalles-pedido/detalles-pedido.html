@@ -1,0 +1,88 @@
+<section class="mx-auto max-w-5xl">
+  <div class="mb-6 flex flex-col gap-3 border-b border-gray-300 pb-5 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+      <p class="mb-1 text-sm font-semibold uppercase tracking-wide text-gray-500">Pizzería</p>
+      <h2 class="text-2xl font-bold text-gray-900">Detalle del pedido</h2>
+    </div>
+    <span class="w-fit text-sm font-semibold text-gray-500">
+      Pedido #{{ idPedido }}
+    </span>
+  </div>
+
+  <p *ngIf="confirmacion" role="status"
+    class="mb-5 border-l-4 border-gray-300 bg-green-50 p-4 text-sm font-medium text-green-800">
+    {{ confirmacion }}
+  </p>
+
+  <p *ngIf="cargando" role="status"
+    class="border-l-4 border-gray-300 bg-gray-50 p-4 text-sm text-gray-700">
+    Cargando la información del pedido...
+  </p>
+
+  <div *ngIf="error" role="alert"
+    class="border-l-4 border-gray-300 bg-gray-50 p-4 text-sm text-red-800">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!cargando && !error && detalles.length === 0"
+    class="border-y border-gray-200 py-5 text-gray-700">
+    <h3 class="font-semibold">No se encontró información para este pedido.</h3>
+    <p class="mt-1 text-sm">Verifica el número del pedido o vuelve a consultar las ventas.</p>
+  </div>
+
+  <div *ngIf="!cargando && detalles.length > 0">
+    <dl class="mb-7 grid gap-4 border-b border-gray-200 pb-5 sm:grid-cols-2">
+      <div>
+        <dt class="text-sm font-medium text-gray-500">Fecha del pedido</dt>
+        <dd class="mt-1 text-lg font-semibold text-gray-900">
+          {{ detalles[0].dia }}/{{ detalles[0].mes }}/{{ detalles[0].anio }}
+        </dd>
+      </div>
+      <div>
+        <dt class="text-sm font-medium text-gray-500">Líneas de pizza</dt>
+        <dd class="mt-1 text-lg font-semibold text-gray-900">{{ detalles.length }}</dd>
+      </div>
+    </dl>
+
+    <h3 class="mb-3 text-lg font-semibold text-gray-900">Pizzas del pedido</h3>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-sm text-gray-600">
+        <thead class="bg-gray-100 text-xs uppercase text-gray-700">
+          <tr>
+            <th scope="col" class="px-5 py-3">Tamaño</th>
+            <th scope="col" class="px-5 py-3">Ingredientes</th>
+            <th scope="col" class="px-5 py-3 text-center">Cantidad</th>
+            <th scope="col" class="px-5 py-3 text-right">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let d of detalles" class="border-b border-gray-200 hover:bg-gray-50">
+            <td class="px-5 py-4 font-medium capitalize text-gray-900">{{ d.tamano }}</td>
+            <td class="px-5 py-4">{{ d.ingredientes }}</td>
+            <td class="px-5 py-4 text-center">{{ d.no_pizzas }}</td>
+            <td class="px-5 py-4 text-right font-medium text-gray-900">
+              ${{ d.subtotal }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-5 flex justify-end">
+      <p class="border-t border-gray-300 pt-4 text-lg font-bold text-gray-900">
+        Total del pedido: ${{ detalles[0].totalCosto }}
+      </p>
+    </div>
+  </div>
+
+  <div class="mt-8 flex flex-col gap-3 border-t border-gray-300 pt-5 sm:flex-row sm:justify-between">
+    <a routerLink="/pedidos"
+      class="inline-flex items-center justify-center rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300">
+      Volver a pedidos realizados
+    </a>
+    <a routerLink="/pedido"
+      class="inline-flex items-center justify-center rounded-md bg-blue-700 px-4 py-2 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300">
+      Crear otro pedido
+    </a>
+  </div>
+</section>

@@ -1,0 +1,5 @@
+.topbar { display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: #374151; color: #fff; }
+.topbar h1 { margin: 0; font-size: 1.5rem; }
+nav a { color: #fff; margin-left: 1rem; text-decoration: none; padding: .3rem .6rem; border-radius: 4px; }
+nav a.active { background: rgba(255, 255, 255, .25); }
+.content { width: min(100% - 2rem, 1440px); margin: 1.5rem auto; font-family: sans-serif; }

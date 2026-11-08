@@ -1,0 +1,29 @@
+<div class="mx-auto max-w-7xl space-y-4">
+  <app-formulario-pedido
+    [formularioCliente]="formularioCliente"
+    [formularioPizza]="formularioPizza"
+    [tamanos]="tamanos"
+    [precios]="precios"
+    [ingredientesDisponibles]="ingredientesDisponibles"
+    (agregarPizza)="agregar()">
+  </app-formulario-pedido>
+
+  <p *ngIf="error" role="alert" class="rounded-lg border border-gray-300 bg-red-50 p-3 text-sm text-red-800">
+    {{ error }}
+  </p>
+
+  <div class="grid items-start gap-4 xl:grid-cols-5">
+    <app-resumen-pedido
+      class="block xl:col-span-3"
+      [pizzas]="pizzas"
+      [total]="total"
+      [guardando]="guardando"
+      (quitarPizza)="quitar($event)"
+      (terminarPedido)="terminar()">
+    </app-resumen-pedido>
+
+    <div class="xl:col-span-2">
+      <app-panel-ventas></app-panel-ventas>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+<section class="rounded-md border border-gray-400 bg-gray-50 p-4">
+  <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <p class="text-sm font-medium text-gray-500">Detalle</p>
+      <h3 class="text-lg font-semibold text-gray-900">Pizzas del pedido</h3>
+    </div>
+    <span class="text-sm text-gray-500">
+      {{ pizzas.length }} {{ pizzas.length === 1 ? 'línea' : 'líneas' }}
+    </span>
+  </div>
+
+  <div *ngIf="pizzas.length > 0" class="min-h-[210px] overflow-x-auto">
+    <table class="w-full text-left text-sm text-gray-600">
+      <thead class="bg-gray-100 text-xs uppercase text-gray-700">
+        <tr>
+          <th scope="col" class="px-4 py-3">Tamaño</th>
+          <th scope="col" class="px-4 py-3">Ingredientes</th>
+          <th scope="col" class="px-4 py-3 text-center">Núm. pizzas</th>
+          <th scope="col" class="px-4 py-3 text-right">Subtotal</th>
+          <th scope="col" class="px-4 py-3"><span class="sr-only">Acciones</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pizza of pizzas; let i = index" class="border-b border-gray-200 hover:bg-gray-50">
+          <td class="whitespace-nowrap px-4 py-3 font-medium capitalize text-gray-900">{{ pizza.tamano }}</td>
+          <td class="px-4 py-3">{{ pizza.ingredientes }}</td>
+          <td class="px-4 py-3 text-center">{{ pizza.no_pizzas }}</td>
+          <td class="whitespace-nowrap px-4 py-3 text-right font-medium text-gray-900">
+            ${{ pizza.subtotal }}
+          </td>
+          <td class="px-4 py-3 text-right">
+            <button type="button" (click)="quitarPizza.emit(i)"
+              class="text-xs font-medium text-gray-700 hover:underline">
+              Quitar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="pizzas.length === 0" class="flex min-h-[210px] items-center justify-center border-y border-gray-200 text-center text-sm text-gray-500">
+      Agrega una pizza para comenzar el pedido.
+  </div>
+
+  <div class="mt-5 flex flex-col gap-4 border-t border-gray-300 pt-4 sm:flex-row sm:items-center sm:justify-between">
+    <p class="text-lg font-bold text-gray-900">Total: <span>${{ total }}</span></p>
+    <button type="button" (click)="terminarPedido.emit()" [disabled]="guardando || pizzas.length === 0"
+      class="rounded-md bg-gray-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-60">
+      {{ guardando ? 'Guardando pedido...' : 'Terminar pedido' }}
+    </button>
+  </div>
+</section>
